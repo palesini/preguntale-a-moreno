@@ -16,7 +16,7 @@ const barlowCondensed = Barlow_Condensed({
   weight: ["600", "700", "800"],
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://modo-guillermo.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://elmodomoreno.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

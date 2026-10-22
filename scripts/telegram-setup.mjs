@@ -1,6 +1,6 @@
 // Registra el webhook del bot y sus comandos. Se corre una vez (y cada vez que cambie el dominio):
 //   npm run telegram:setup
-// Lee del .env: TELEGRAM_BOT_TOKEN, TELEGRAM_WEBHOOK_SECRET y SITE_URL (ej. https://modo-guillermo.vercel.app)
+// Lee del .env: TELEGRAM_BOT_TOKEN, TELEGRAM_WEBHOOK_SECRET y SITE_URL (ej. https://elmodomoreno.vercel.app)
 const { TELEGRAM_BOT_TOKEN: token, TELEGRAM_WEBHOOK_SECRET: secret, SITE_URL: site } = process.env;
 if (!token || !secret || !site) {
   console.error("Faltan TELEGRAM_BOT_TOKEN, TELEGRAM_WEBHOOK_SECRET o SITE_URL en el .env");
