@@ -15,7 +15,7 @@ describe("llmConfigFromEnv", () => {
   it("usa defaults y limpia la barra final", () => {
     const c = llmConfigFromEnv({ LLM_API_KEY: "x", LLM_BASE_URL: "https://api.groq.com/openai/v1/" });
     expect(c.baseUrl).toBe("https://api.groq.com/openai/v1");
-    expect(c.model).toBe("gpt-4o-mini");
+    expect(c.model).toBe("gpt-4.1-mini");
   });
 });
 

@@ -33,7 +33,7 @@ export function llmConfigFromEnv(env: Record<string, string | undefined> = proce
   return {
     baseUrl: (env.LLM_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, ""),
     apiKey,
-    model: env.LLM_MODEL || "gpt-4o-mini",
+    model: env.LLM_MODEL || "gpt-4.1-mini",
     timeoutMs: Number(env.LLM_TIMEOUT_MS) || 20_000,
   };
 }

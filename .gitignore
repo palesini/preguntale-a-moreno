@@ -56,3 +56,5 @@ server.log
 
 # export viejo de Z.ai
 download/*.tar.gz
+.vercel
+.env*
