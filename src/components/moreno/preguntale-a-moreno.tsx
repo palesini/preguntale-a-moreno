@@ -132,7 +132,7 @@ export function PreguntaleAMoreno({ telegramUrl }: { telegramUrl?: string }) {
     <div className="flex h-dvh flex-col bg-blanco">
       <div className="franja h-1.5 shrink-0" aria-hidden />
       <header className="flex items-center gap-2.5 border-b border-celeste/40 px-4 py-2 sm:px-6">
-        <SolDeMayo className="h-9 w-9" />
+        <SolDeMayo cara className="h-9 w-9" />
         <span className="whitespace-nowrap font-afiche text-xl uppercase leading-none tracking-wide text-tinta sm:text-2xl">
           Preguntale a Moreno
         </span>
@@ -179,7 +179,7 @@ export function PreguntaleAMoreno({ telegramUrl }: { telegramUrl?: string }) {
             ))}
             {loading && (
               <div className="flex items-end gap-2 self-start" aria-label="Moreno está escribiendo">
-                <SolDeMayo className="h-7 w-7 shrink-0" />
+                <SolDeMayo cara className="h-10 w-10 shrink-0" />
                 <div className="flex items-center gap-1.5 rounded-2xl rounded-bl-sm bg-celeste-claro px-4 py-3.5">
                   <span className="typing-dot h-2 w-2 rounded-full bg-celeste-hondo" />
                   <span className="typing-dot h-2 w-2 rounded-full bg-celeste-hondo" />
@@ -249,7 +249,7 @@ function Portada({ onPick }: { onPick: (q: string) => void }) {
           Preguntale a
         </span>
         <span className="flex justify-center bg-blanco py-4" aria-hidden>
-          <SolDeMayo className="sol-entra h-[clamp(6.5rem,20vw,10rem)] w-[clamp(6.5rem,20vw,10rem)]" />
+          <SolDeMayo cara className="sol-entra h-[clamp(8.5rem,30vw,13rem)] w-[clamp(8.5rem,30vw,13rem)]" />
         </span>
         <span className="block bg-celeste px-4 pb-5 pt-2 text-center text-[clamp(4rem,19vw,10rem)] tracking-wide">
           Moreno
@@ -341,7 +341,7 @@ function Burbuja({
   const fuentes = m.frasesFuente ?? [];
   return (
     <div className="flex max-w-[92%] items-start gap-2 self-start">
-      <SolDeMayo className="mt-1 h-7 w-7 shrink-0" />
+      <SolDeMayo cara className="h-10 w-10 shrink-0" />
       <div className="flex min-w-0 flex-col">
         <div className="whitespace-pre-wrap rounded-2xl rounded-tl-sm bg-celeste-claro px-4 py-3 text-base leading-relaxed text-tinta">
           {m.content}

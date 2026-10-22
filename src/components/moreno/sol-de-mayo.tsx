@@ -1,7 +1,8 @@
 // Sol de Mayo: 32 rayos alternados, rectos y flamígeros, como en la bandera. Dibujo propio en SVG.
+// Con `cara`, lleva en el centro el sticker de Moreno sobre un disco blanco.
 const RAYOS = Array.from({ length: 32 }, (_, i) => i);
 
-export function SolDeMayo({ className, title }: { className?: string; title?: string }) {
+export function SolDeMayo({ className, title, cara = false }: { className?: string; title?: string; cara?: boolean }) {
   return (
     <svg viewBox="-50 -50 100 100" className={className} role={title ? "img" : undefined} aria-hidden={title ? undefined : true}>
       {title && <title>{title}</title>}
@@ -19,7 +20,14 @@ export function SolDeMayo({ className, title }: { className?: string; title?: st
         )}
         <circle r="26" />
       </g>
-      <circle r="21.5" fill="none" stroke="var(--sol-borde)" strokeWidth="0.6" opacity="0.55" />
+      {cara ? (
+        <>
+          <circle r="23" fill="var(--blanco)" stroke="var(--sol-borde)" strokeWidth="0.6" />
+          <image href="/moreno-cara.png" x="-14.6" y="-21.5" width="29.2" height="42.3" />
+        </>
+      ) : (
+        <circle r="21.5" fill="none" stroke="var(--sol-borde)" strokeWidth="0.6" opacity="0.55" />
+      )}
     </svg>
   );
 }
