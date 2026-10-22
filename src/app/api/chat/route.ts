@@ -45,6 +45,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       response: reply.text,
       frases_fuente: reply.sources,
+      modo: reply.mode,
       timestamp: new Date().toISOString(),
     });
   } catch (err) {

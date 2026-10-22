@@ -12,6 +12,7 @@ interface Message {
   kind?: Kind; // "corpus" (frase real) y "error" no se mandan al LLM como historial
   frasesFuente?: string[];
   retryText?: string;
+  modo?: "ia" | "archivo"; // "archivo": respuesta armada con citas reales, sin IA
 }
 
 interface ChatProps {
@@ -70,7 +71,12 @@ export function Chat({ randomPhrase }: ChatProps) {
         }
         setMessages((m) => [
           ...m,
-          { role: "assistant", content: data.response, frasesFuente: data.frases_fuente || [] },
+          {
+            role: "assistant",
+            content: data.response,
+            frasesFuente: data.frases_fuente || [],
+            modo: data.modo,
+          },
         ]);
       } catch (err) {
         setMessages((m) => [
@@ -108,7 +114,7 @@ export function Chat({ randomPhrase }: ChatProps) {
 
   const handleShare = async (msg: Message) => {
     const firma =
-      msg.kind === "corpus"
+      msg.kind === "corpus" || msg.modo === "archivo"
         ? "— Guillermo Moreno (frase real del corpus)"
         : "— El Modo Guillermo (respuesta generada por IA, no es una declaración real)";
     const text = `"${msg.content}"\n${firma}`;
@@ -326,7 +332,15 @@ function MessageBubble({
         </div>
 
         {!isUser && !first && (
-          <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground font-body">
+          <div className="flex flex-wrap items-center gap-3 mt-1 text-xs text-muted-foreground font-body">
+            {message.modo === "archivo" && (
+              <span
+                className="uppercase tracking-wider text-primary font-bold"
+                title="La IA no estaba disponible: esta respuesta cita frases reales del corpus."
+              >
+                Cita real del archivo
+              </span>
+            )}
             {sources.length > 0 && (
               <button
                 onClick={onToggleSource}

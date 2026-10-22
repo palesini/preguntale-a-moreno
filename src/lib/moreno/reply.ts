@@ -1,4 +1,5 @@
 // Motor único de respuesta "Modo Guillermo": lo usan la web, WhatsApp y los bots que vengan.
+import { archivoReply } from "./archivo";
 import { getCorpus, type Hit } from "./corpus";
 import { complete, type CompleteOptions, type LlmMessage } from "./llm";
 import { MORENO_SYSTEM_PROMPT } from "./system-prompt";
@@ -8,26 +9,34 @@ export interface ChatTurn {
   content: string;
 }
 
+export type ReplyMode = "ia" | "archivo";
+
 export interface Reply {
   text: string;
   sources: string[];
+  mode: ReplyMode;
 }
 
 export interface ReplyDeps {
   complete: (messages: LlmMessage[], opts: CompleteOptions) => Promise<string>;
   search: (query: string, k: number) => Hit[];
+  random: () => string;
+  onLlmError?: (err: unknown) => void;
 }
 
 const defaultDeps: ReplyDeps = {
   complete: (messages, opts) => complete(messages, opts),
   search: (query, k) => getCorpus().search(query, k),
+  random: () => getCorpus().random(),
+  onLlmError: (err) => console.warn("[reply] LLM no disponible, uso modo archivo:", (err as Error)?.message),
 };
 
 export const REPLY_OPTIONS: CompleteOptions = { maxTokens: 220, temperature: 0.8 };
-const HISTORY_TURNS = 10;
-const CONTEXT_FRASES = 6;
+// Acotados por el límite de tokens/minuto del plan gratis de Groq.
+const HISTORY_TURNS = 6;
+const CONTEXT_FRASES = 5;
 const SOURCES_SHOWN = 3;
-const MAX_FRASE_CHARS = 320;
+const MAX_FRASE_CHARS = 260;
 
 export function buildSystemPrompt(frases: string[]): string {
   if (frases.length === 0) return MORENO_SYSTEM_PROMPT;
@@ -58,6 +67,12 @@ export async function generateReply(history: ChatTurn[], deps: ReplyDeps = defau
     { role: "system", content: buildSystemPrompt(frases) },
     ...turns,
   ];
-  const text = await deps.complete(messages, REPLY_OPTIONS);
-  return { text, sources: frases.slice(0, SOURCES_SHOWN) };
+  try {
+    const text = await deps.complete(messages, REPLY_OPTIONS);
+    return { text, sources: frases.slice(0, SOURCES_SHOWN), mode: "ia" };
+  } catch (err) {
+    // Sin key, sin cupo o caído: nunca dejamos al usuario sin respuesta. Citamos frases reales.
+    deps.onLlmError?.(err);
+    return { ...archivoReply(last.content, deps), mode: "archivo" };
+  }
 }

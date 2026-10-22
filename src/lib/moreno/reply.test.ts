@@ -9,6 +9,7 @@ function deps(hits: string[][] = [["milei es globalizador", "milei no es de dere
   let call = 0;
   return {
     complete: vi.fn().mockResolvedValue("Mirá, Milei es un globalizador."),
+    random: () => "frase al azar",
     search: vi.fn().mockImplementation(() =>
       (hits[Math.min(call++, hits.length - 1)] ?? []).map((text, index) => ({ text, index, score: 1 }))
     ),
@@ -22,8 +23,8 @@ describe("buildSystemPrompt", () => {
   it("agrega las frases reales y recorta las largas", () => {
     const p = buildSystemPrompt(["corta", "x".repeat(500)]);
     expect(p).toContain("- corta");
-    expect(p).toContain("x".repeat(320) + "…");
-    expect(p).not.toContain("x".repeat(321));
+    expect(p).toContain("x".repeat(260) + "…");
+    expect(p).not.toContain("x".repeat(261));
   });
 });
 
@@ -33,7 +34,7 @@ describe("generateReply", () => {
     const r = await generateReply([{ role: "user", content: "¿Qué pensás de Milei?" }], d);
     expect(r.text).toBe("Mirá, Milei es un globalizador.");
     expect(r.sources).toEqual(["milei es globalizador", "milei no es de derecha"]);
-    expect(d.search).toHaveBeenCalledWith("¿Qué pensás de Milei?", 6);
+    expect(d.search).toHaveBeenCalledWith("¿Qué pensás de Milei?", 5);
     const [messages, opts] = d.complete.mock.calls[0];
     expect(messages[0].role).toBe("system");
     expect(messages[0].content).toContain("- milei es globalizador");
@@ -51,18 +52,36 @@ describe("generateReply", () => {
       ],
       d
     );
-    expect(d.search).toHaveBeenLastCalledWith("Kicillof ¿y por qué?", 6);
+    expect(d.search).toHaveBeenLastCalledWith("Kicillof ¿y por qué?", 5);
     expect(r.sources).toEqual(["kicillof devaluo"]);
   });
 
-  it("manda como mucho los últimos 10 turnos", async () => {
+  it("manda como mucho los últimos 6 turnos", async () => {
     const d = deps();
     const history = Array.from({ length: 15 }, (_, i) => ({
       role: (i % 2 === 0 ? "user" : "assistant") as "user" | "assistant",
       content: `m${i}`,
     }));
     await generateReply(history, d);
-    expect(d.complete.mock.calls[0][0]).toHaveLength(11);
+    expect(d.complete.mock.calls[0][0]).toHaveLength(7);
+  });
+
+  it("si el LLM falla, responde en modo archivo con frases reales", async () => {
+    const d = deps();
+    d.complete.mockImplementation(async () => {
+      throw new Error("429 sin cupo");
+    });
+    const onLlmError = vi.fn();
+    const r = await generateReply([{ role: "user", content: "Milei" }], { ...d, onLlmError });
+    expect(r.mode).toBe("archivo");
+    expect(r.text).toMatch(/“Milei (es globalizador|no es de derecha)\.”/);
+    expect(r.sources).toEqual(["milei es globalizador", "milei no es de derecha"]);
+    expect(onLlmError).toHaveBeenCalled();
+  });
+
+  it("con el LLM andando, el modo es ia", async () => {
+    const r = await generateReply([{ role: "user", content: "Milei" }], deps());
+    expect(r.mode).toBe("ia");
   });
 
   it("falla si no hay mensaje del usuario", async () => {

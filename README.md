@@ -29,8 +29,12 @@ npm run dev                  # http://localhost:3000
 | `npm run corpus` | regenera `src/data/*.json` desde `upload/frases_moreno.txt` |
 
 ## LLM
-Cualquier API compatible con OpenAI. Ejemplos en `.env.example` (OpenAI, Groq, OpenRouter, DeepSeek).
-Si falta la key o el LLM falla, la API devuelve 503 con un mensaje claro: no hay respuestas inventadas de relleno.
+Cualquier API compatible con OpenAI. Ejemplos en `.env.example`. En producción se usa **Groq gratis** con `qwen/qwen3.8-27b`.
+
+### Modo archivo (sin IA, costo cero)
+Si no hay `LLM_API_KEY`, o el LLM falla o se pasa del cupo (el plan gratis de Groq da ~8.000 tokens/min),
+la respuesta se arma con la frase real más relevante del corpus más una apertura y un cierre en su estilo
+(`lib/moreno/archivo.ts`). La UI la marca como "Cita real del archivo". La API devuelve `modo: "ia" | "archivo"`.
 
 ## Seguridad
 - `/api/chat` valida el body con zod: solo roles `user`/`assistant` (nadie puede inyectar un `system`), máx. 2.000 caracteres por mensaje.

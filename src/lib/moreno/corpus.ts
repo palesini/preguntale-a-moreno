@@ -47,6 +47,7 @@ export interface CorpusIndex {
   size: number;
   search(query: string, k?: number): Hit[];
   get(index: number): string | undefined;
+  random(): string;
 }
 
 export function createIndex(docs: string[], k1 = 1.5, b = 0.75): CorpusIndex {
@@ -74,6 +75,7 @@ export function createIndex(docs: string[], k1 = 1.5, b = 0.75): CorpusIndex {
   return {
     size: N,
     get: (i) => docs[i],
+    random: () => docs[Math.floor(Math.random() * docs.length)],
     search(query, k = 5) {
       const terms = [...new Set(tokenize(query))];
       if (terms.length === 0) return [];
