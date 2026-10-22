@@ -1,6 +1,6 @@
-# El Modo Moreno
+# Preguntale a Moreno
 
-Asistente de IA con la personalidad de Guillermo Moreno (Principios y Valores), entrenado con un corpus de 2.564 frases públicas reales.
+Asistente de IA con la personalidad de Guillermo Moreno, entrenado con un corpus de 2.564 frases públicas reales.
 Funciona en la web y en Telegram.
 
 ## Cómo funciona
@@ -59,7 +59,7 @@ El webhook `/api/whatsapp` está armado (firma de Twilio validada). Para activar
 ```
 src/
 ├── app/api/{chat,telegram,whatsapp,search,random}/route.ts
-├── components/moreno/        modo-moreno.tsx (toda la UI)
+├── components/moreno/        preguntale-a-moreno.tsx (toda la UI) · sol-de-mayo.tsx
 ├── data/                     frases.json (generado)
 └── lib/
     ├── moreno/               corpus.ts (BM25) · llm.ts · reply.ts (motor) · archivo.ts · telegram.ts · conversations.ts · system-prompt.ts

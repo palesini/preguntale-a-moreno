@@ -81,7 +81,7 @@ export function sendMessage(msg: TgMessage, text: string) {
 
 export const TEXTS = {
   start: (name?: string) =>
-    `${name ? `Hola, ${name}. ` : ""}Soy el Modo Moreno. Preguntame lo que quieras, que la economía es producción y trabajo, no especulación y renta.\n\n/frase: una frase real de Guillermo Moreno\n/nueva: empezar una charla nueva\n\nEn grupos, nombrame (@) o escribí /moreno y tu pregunta.`,
+    `${name ? `Hola, ${name}. ` : ""}Preguntame lo que quieras, que la economía es producción y trabajo, no especulación y renta.\n\n/frase: una frase real de Guillermo Moreno\n/nueva: empezar una charla nueva\n\nEn grupos, nombrame (@) o escribí /moreno y tu pregunta.`,
   help: "Escribime tu pregunta, o usá:\n/frase: una frase real de Guillermo Moreno\n/nueva: empezar una charla nueva\n\nEn grupos: /moreno tu pregunta, o nombrame con @.",
   reset: "Listo, empezamos de nuevo. Preguntame lo que quieras.",
   slowDown: "Pará un poco, muchacho. Mandame de a una y en un minuto seguimos.",

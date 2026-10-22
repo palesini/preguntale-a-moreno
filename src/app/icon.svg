@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100">
+  <circle r="50" fill="#74ACDF"/>
+  <circle r="40" fill="#ffffff"/>
+  <circle r="30" fill="#74ACDF"/>
+  <g fill="#F6B40E" stroke="#85340A" stroke-width="1">
+    <circle r="16"/>
+  </g>
+</svg>

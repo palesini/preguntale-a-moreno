@@ -1,35 +1,36 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* El Modo Moreno — identidad Principios y Valores.
-   Azul profundo de base, celeste del logo, blanco, y el dorado del Sol de Mayo solo para citas reales. */
+/* Preguntale a Moreno — símbolos patrios: celeste y blanco de la bandera y el dorado del Sol de Mayo. */
 :root {
-  --azul: #0a2350;
-  --azul-2: #13306a;
-  --azul-3: #1c3f85;
-  --celeste: #00aeef;
+  --celeste: #74acdf; /* celeste oficial de la bandera */
+  --celeste-claro: #eaf3fb;
+  --celeste-hondo: #1f5f96; /* para botones y texto sobre blanco (contraste AA) */
   --blanco: #ffffff;
-  --niebla: #b4c6e4;
+  --tinta: #0f2440;
+  --gris: #4a6280;
   --sol: #f6b40e;
-  --alerta: #ff9b8f;
+  --sol-borde: #85340a;
+  --alerta: #b3261e;
 
   /* tokens que usa el toast de shadcn */
-  --background: var(--azul-2);
-  --foreground: var(--blanco);
-  --border: var(--azul-3);
-  --destructive: #b3261e;
+  --background: var(--blanco);
+  --foreground: var(--tinta);
+  --border: var(--celeste);
+  --destructive: var(--alerta);
   --destructive-foreground: var(--blanco);
-  --ring: var(--celeste);
+  --ring: var(--celeste-hondo);
 }
 
 @theme inline {
-  --color-azul: var(--azul);
-  --color-azul-2: var(--azul-2);
-  --color-azul-3: var(--azul-3);
   --color-celeste: var(--celeste);
+  --color-celeste-claro: var(--celeste-claro);
+  --color-celeste-hondo: var(--celeste-hondo);
   --color-blanco: var(--blanco);
-  --color-niebla: var(--niebla);
+  --color-tinta: var(--tinta);
+  --color-gris: var(--gris);
   --color-sol: var(--sol);
+  --color-sol-borde: var(--sol-borde);
   --color-alerta: var(--alerta);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -38,30 +39,34 @@
   --color-destructive-foreground: var(--destructive-foreground);
   --color-ring: var(--ring);
   --font-sans: var(--font-barlow), system-ui, sans-serif;
-  --font-display: var(--font-barlow-condensed), var(--font-barlow), sans-serif;
+  --font-afiche: var(--font-anton), var(--font-barlow), sans-serif;
 }
 
 html,
 body {
-  background: var(--azul);
-  color: var(--blanco);
+  background: var(--blanco);
+  color: var(--tinta);
   font-family: var(--font-barlow), system-ui, sans-serif;
 }
 
 :focus-visible {
-  outline: 2px solid var(--celeste);
+  outline: 2px solid var(--celeste-hondo);
   outline-offset: 2px;
 }
 
-/* Doble anillo del logo (SVG en modo-moreno.tsx). El título lo corta con una banda azul, como en el logo. */
-.anillos {
-  animation: anillos-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+/* La franja de la bandera arriba de todo */
+.franja {
+  background: linear-gradient(var(--celeste) 0 33.4%, var(--blanco) 33.4% 66.6%, var(--celeste) 66.6%);
 }
 
-@keyframes anillos-in {
+/* Único movimiento de la página: el Sol entra girando al cargar */
+.sol-entra {
+  animation: sol-entra 1100ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes sol-entra {
   from {
     opacity: 0;
-    transform: scale(0.86) rotate(-8deg);
+    transform: rotate(-90deg) scale(0.7);
   }
   to {
     opacity: 1;
@@ -69,14 +74,9 @@ body {
   }
 }
 
-.banda {
-  background: var(--azul);
-  box-shadow: 0 0 0 0.35rem var(--azul);
-}
-
 .scroll-fino {
   scrollbar-width: thin;
-  scrollbar-color: var(--azul-3) transparent;
+  scrollbar-color: var(--celeste) transparent;
 }
 
 .typing-dot {
@@ -92,7 +92,7 @@ body {
   0%,
   60%,
   100% {
-    opacity: 0.3;
+    opacity: 0.35;
     transform: translateY(0);
   }
   30% {
@@ -102,7 +102,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .anillos,
+  .sol-entra,
   .typing-dot {
     animation: none;
   }

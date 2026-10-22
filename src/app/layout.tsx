@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Barlow, Barlow_Condensed } from "next/font/google";
+import { Anton, Barlow } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -10,30 +10,29 @@ const barlow = Barlow({
   style: ["normal", "italic"],
 });
 
-const barlowCondensed = Barlow_Condensed({
-  variable: "--font-barlow-condensed",
+const anton = Anton({
+  variable: "--font-anton",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  weight: "400",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://elmodomoreno.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://preguntaleamoreno.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "El Modo Moreno",
-  description:
-    "Preguntale lo que quieras a Guillermo Moreno. Asistente de IA entrenado con sus frases públicas. Principios y Valores.",
+  title: "Preguntale a Moreno",
+  description: "Preguntale lo que quieras a Guillermo Moreno. Asistente de IA entrenado con sus frases públicas.",
   openGraph: {
-    title: "El Modo Moreno",
-    description: "Preguntale lo que quieras. La economía es producción y trabajo, no especulación y renta.",
+    title: "Preguntale a Moreno",
+    description: "La economía es producción y trabajo, no especulación y renta. Preguntá lo que quieras.",
     type: "website",
     locale: "es_AR",
   },
-  twitter: { card: "summary_large_image", title: "El Modo Moreno" },
+  twitter: { card: "summary_large_image", title: "Preguntale a Moreno" },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A2350",
+  themeColor: "#74ACDF",
   width: "device-width",
   initialScale: 1,
 };
@@ -41,7 +40,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es-AR">
-      <body className={`${barlow.variable} ${barlowCondensed.variable} antialiased`}>
+      <body className={`${barlow.variable} ${anton.variable} antialiased`}>
         {children}
         <Toaster />
       </body>

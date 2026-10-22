@@ -1,5 +1,5 @@
 /**
- * Webhook del bot de Telegram — "El Modo Moreno".
+ * Webhook del bot de Telegram — "Preguntale a Moreno".
  *
  * Variables de entorno (en Vercel):
  *   TELEGRAM_WEBHOOK_SECRET  secreto que Telegram manda en X-Telegram-Bot-Api-Secret-Token (obligatorio)

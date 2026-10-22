@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AlertTriangle, ChevronDown, Quote, RefreshCw, RotateCcw, Send, Share2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { SolDeMayo } from "./sol-de-mayo";
 
 type Kind = "chat" | "corpus" | "error";
 
@@ -27,7 +28,7 @@ const SUGERENCIAS = [
 
 const AVISO = "Asistente de IA entrenado con frases públicas de Guillermo Moreno. Las respuestas se generan automáticamente.";
 
-export function ModoMoreno({ telegramUrl }: { telegramUrl?: string }) {
+export function PreguntaleAMoreno({ telegramUrl }: { telegramUrl?: string }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -108,10 +109,10 @@ export function ModoMoreno({ telegramUrl }: { telegramUrl?: string }) {
 
   const share = async (msg: Message) => {
     const real = msg.kind === "corpus" || msg.modo === "archivo";
-    const firma = real ? "— Guillermo Moreno" : "— El Modo Moreno (IA entrenada con frases de Guillermo Moreno)";
+    const firma = real ? "— Guillermo Moreno" : "— Preguntale a Moreno (IA entrenada con frases de Guillermo Moreno)";
     const text = `“${msg.content}”\n${firma}\n${window.location.origin}`;
     try {
-      if (navigator.share) await navigator.share({ title: "El Modo Moreno", text });
+      if (navigator.share) await navigator.share({ title: "Preguntale a Moreno", text });
       else {
         await navigator.clipboard.writeText(text);
         toast({ title: "Copiado", description: "Pegalo donde quieras." });
@@ -128,15 +129,18 @@ export function ModoMoreno({ telegramUrl }: { telegramUrl?: string }) {
   };
 
   return (
-    <div className="flex h-dvh flex-col bg-azul">
-      <header className="flex items-center gap-3 border-b border-azul-3 px-4 py-2.5 sm:px-6">
-        <img src="/pyv-logo.png" alt="Principios y Valores" width={40} height={40} className="h-10 w-10" />
-        <span className="font-display text-2xl font-bold leading-none tracking-tight">El Modo Moreno</span>
+    <div className="flex h-dvh flex-col bg-blanco">
+      <div className="franja h-1.5 shrink-0" aria-hidden />
+      <header className="flex items-center gap-2.5 border-b border-celeste/40 px-4 py-2 sm:px-6">
+        <SolDeMayo className="h-9 w-9" />
+        <span className="whitespace-nowrap font-afiche text-xl uppercase leading-none tracking-wide text-tinta sm:text-2xl">
+          Preguntale a Moreno
+        </span>
         <nav className="ml-auto flex items-center gap-2">
           {!empty && (
             <button
               onClick={nuevaCharla}
-              className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm text-niebla hover:bg-azul-2 hover:text-blanco"
+              className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm text-gris hover:bg-celeste-claro hover:text-tinta"
             >
               <RotateCcw className="h-4 w-4" aria-hidden />
               <span className="hidden sm:inline">Nueva charla</span>
@@ -147,10 +151,11 @@ export function ModoMoreno({ telegramUrl }: { telegramUrl?: string }) {
               href={telegramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 rounded-full border border-celeste px-3 py-1.5 text-sm font-medium text-celeste hover:bg-celeste hover:text-azul"
+              className="flex items-center gap-1.5 rounded-full bg-celeste-hondo px-3 py-1.5 text-sm font-medium text-blanco hover:bg-tinta"
             >
               <Send className="h-4 w-4" aria-hidden />
-              <span>Telegram</span>
+              <span className="hidden sm:inline">Telegram</span>
+              <span className="sr-only sm:hidden">Telegram</span>
             </a>
           )}
         </nav>
@@ -173,20 +178,20 @@ export function ModoMoreno({ telegramUrl }: { telegramUrl?: string }) {
               />
             ))}
             {loading && (
-              <div
-                className="flex items-center gap-1.5 self-start rounded-2xl rounded-tl-sm bg-azul-2 px-4 py-3.5"
-                aria-label="Moreno está escribiendo"
-              >
-                <span className="typing-dot h-2 w-2 rounded-full bg-celeste" />
-                <span className="typing-dot h-2 w-2 rounded-full bg-celeste" />
-                <span className="typing-dot h-2 w-2 rounded-full bg-celeste" />
+              <div className="flex items-end gap-2 self-start" aria-label="Moreno está escribiendo">
+                <SolDeMayo className="h-7 w-7 shrink-0" />
+                <div className="flex items-center gap-1.5 rounded-2xl rounded-bl-sm bg-celeste-claro px-4 py-3.5">
+                  <span className="typing-dot h-2 w-2 rounded-full bg-celeste-hondo" />
+                  <span className="typing-dot h-2 w-2 rounded-full bg-celeste-hondo" />
+                  <span className="typing-dot h-2 w-2 rounded-full bg-celeste-hondo" />
+                </div>
               </div>
             )}
           </div>
         )}
       </main>
 
-      <footer className="border-t border-azul-3 bg-azul px-4 pb-3 pt-3 sm:px-6">
+      <footer className="border-t border-celeste/40 bg-blanco px-4 pb-3 pt-3 sm:px-6">
         <form
           className="mx-auto flex max-w-2xl items-end gap-2"
           onSubmit={(e) => {
@@ -198,7 +203,7 @@ export function ModoMoreno({ telegramUrl }: { telegramUrl?: string }) {
             type="button"
             onClick={fraseReal}
             title="Una frase real de Guillermo Moreno"
-            className="flex h-12 shrink-0 items-center gap-1.5 rounded-full px-3 text-sm text-niebla hover:bg-azul-2 hover:text-blanco"
+            className="flex h-12 shrink-0 items-center gap-1.5 rounded-full px-3 text-sm text-gris hover:bg-celeste-claro hover:text-tinta"
           >
             <Quote className="h-4 w-4" aria-hidden />
             <span className="hidden sm:inline">Frase real</span>
@@ -218,61 +223,57 @@ export function ModoMoreno({ telegramUrl }: { telegramUrl?: string }) {
             placeholder="Preguntale a Moreno…"
             aria-label="Tu pregunta"
             disabled={loading}
-            className="min-h-12 flex-1 resize-none rounded-3xl bg-blanco px-5 py-3 text-base text-azul placeholder:text-azul/50 focus:outline-none focus:ring-2 focus:ring-celeste disabled:opacity-70"
+            className="min-h-12 flex-1 resize-none rounded-3xl border-2 border-celeste bg-blanco px-5 py-2.5 text-base text-tinta placeholder:text-gris/70 focus:border-celeste-hondo focus:outline-none disabled:opacity-70"
           />
           <button
             type="submit"
             disabled={loading || !input.trim()}
             aria-label="Enviar"
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-celeste text-azul hover:bg-blanco disabled:opacity-40"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-celeste-hondo text-blanco hover:bg-tinta disabled:opacity-40"
           >
             <Send className="h-5 w-5" aria-hidden />
           </button>
         </form>
-        <p className="mx-auto mt-2 max-w-2xl text-center text-xs text-niebla">{AVISO}</p>
+        <p className="mx-auto mt-2 max-w-2xl text-center text-xs text-gris">{AVISO}</p>
       </footer>
     </div>
   );
 }
 
+// La portada es la bandera: franjas celestes con el título y el Sol de Mayo en la blanca.
 function Portada({ onPick }: { onPick: (q: string) => void }) {
   return (
-    <section className="mx-auto flex min-h-full max-w-2xl flex-col items-center justify-center px-4 py-8 text-center">
-      <div className="relative flex aspect-square w-full max-w-[min(26rem,72vw)] items-center justify-center">
-        <Anillos />
-        <h1 className="banda relative z-10 w-[112%] py-2 font-display font-extrabold uppercase leading-[0.86] tracking-tight">
-          <span className="block text-[clamp(2.6rem,11vw,4.6rem)]">Preguntale a</span>
-          <span className="block text-[clamp(3.6rem,16vw,6.6rem)] text-celeste">Moreno</span>
-        </h1>
+    <section className="flex min-h-full flex-col">
+      <h1 className="font-afiche uppercase leading-none text-tinta">
+        <span className="block bg-celeste px-4 pb-3 pt-6 text-center text-[clamp(2.4rem,9vw,5rem)] tracking-wide">
+          Preguntale a
+        </span>
+        <span className="flex justify-center bg-blanco py-4" aria-hidden>
+          <SolDeMayo className="sol-entra h-[clamp(6.5rem,20vw,10rem)] w-[clamp(6.5rem,20vw,10rem)]" />
+        </span>
+        <span className="block bg-celeste px-4 pb-5 pt-2 text-center text-[clamp(4rem,19vw,10rem)] tracking-wide">
+          Moreno
+        </span>
+      </h1>
+      <div className="mx-auto flex max-w-2xl flex-col items-center px-4 py-6 text-center">
+        <p className="max-w-md text-lg text-gris">
+          La economía es producción y trabajo, no especulación y renta. Preguntá lo que quieras: política, economía o lo que
+          se te ocurra.
+        </p>
+        <ul className="mt-5 flex flex-wrap justify-center gap-2" aria-label="Preguntas para empezar">
+          {SUGERENCIAS.map((q, i) => (
+            <li key={q} className={i >= 4 ? "hidden sm:block" : undefined}>
+              <button
+                onClick={() => onPick(q)}
+                className="rounded-full border-2 border-celeste px-4 py-1.5 text-sm font-medium text-tinta hover:border-celeste-hondo hover:bg-celeste-claro"
+              >
+                {q}
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-      <p className="mt-2 max-w-md text-lg text-niebla">
-        La economía es producción y trabajo, no especulación y renta. Preguntá lo que quieras: política, economía o lo que se
-        te ocurra.
-      </p>
-      <ul className="mt-6 flex flex-wrap justify-center gap-2" aria-label="Preguntas para empezar">
-        {SUGERENCIAS.map((q, i) => (
-          <li key={q} className={i >= 4 ? "hidden sm:block" : undefined}>
-            <button
-              onClick={() => onPick(q)}
-              className="rounded-full border border-azul-3 bg-azul-2 px-4 py-2 text-sm text-blanco hover:border-celeste hover:text-celeste"
-            >
-              {q}
-            </button>
-          </li>
-        ))}
-      </ul>
     </section>
-  );
-}
-
-// Doble anillo celeste-blanco-celeste del logo de Principios y Valores.
-function Anillos() {
-  return (
-    <svg viewBox="0 0 100 100" className="anillos absolute inset-0 h-full w-full" aria-hidden>
-      <circle cx="50" cy="50" r="46.5" fill="none" stroke="var(--celeste)" strokeWidth="3" />
-      <circle cx="50" cy="50" r="43.5" fill="none" stroke="var(--blanco)" strokeWidth="3" />
-      <circle cx="50" cy="50" r="40.5" fill="none" stroke="var(--celeste)" strokeWidth="3" />
-    </svg>
   );
 }
 
@@ -293,7 +294,7 @@ function Burbuja({
 }) {
   if (m.role === "user") {
     return (
-      <div className="max-w-[85%] self-end rounded-2xl rounded-tr-sm bg-celeste px-4 py-3 text-base font-medium text-azul">
+      <div className="max-w-[85%] self-end rounded-2xl rounded-br-sm bg-celeste-hondo px-4 py-3 text-base text-blanco">
         {m.content}
       </div>
     );
@@ -303,7 +304,7 @@ function Burbuja({
     return (
       <div
         role="alert"
-        className="flex max-w-[85%] items-start gap-2 self-start rounded-2xl border border-alerta/60 px-4 py-3 text-alerta"
+        className="flex max-w-[85%] items-start gap-2 self-start rounded-2xl border border-alerta/50 bg-blanco px-4 py-3 text-alerta"
       >
         <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
         <div>
@@ -324,12 +325,12 @@ function Burbuja({
 
   if (m.kind === "corpus") {
     return (
-      <figure className="max-w-[90%] self-start rounded-2xl bg-blanco px-5 pb-3 pt-4 text-azul">
+      <figure className="max-w-[90%] self-start border-y-4 border-celeste bg-blanco px-1 py-3 text-tinta">
         <Quote className="h-6 w-6 text-sol" aria-hidden />
-        <blockquote className="mt-1 text-lg font-medium leading-snug first-letter:uppercase">{m.content}</blockquote>
-        <figcaption className="mt-2 flex items-center justify-between gap-3 text-sm text-azul/70">
+        <blockquote className="mt-1 text-xl font-medium leading-snug first-letter:uppercase">{m.content}</blockquote>
+        <figcaption className="mt-2 flex items-center justify-between gap-3 text-sm text-gris">
           <span>Frase real de Guillermo Moreno</span>
-          <button onClick={onShare} className="flex items-center gap-1 hover:text-azul">
+          <button onClick={onShare} className="flex items-center gap-1 hover:text-tinta">
             <Share2 className="h-4 w-4" aria-hidden /> Compartir
           </button>
         </figcaption>
@@ -339,35 +340,38 @@ function Burbuja({
 
   const fuentes = m.frasesFuente ?? [];
   return (
-    <div className="flex max-w-[90%] flex-col self-start">
-      <div className="whitespace-pre-wrap rounded-2xl rounded-tl-sm bg-azul-2 px-4 py-3 text-base leading-relaxed">
-        {m.content}
-      </div>
-      <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 px-1 text-sm text-niebla">
-        {m.modo === "archivo" && (
-          <span className="text-sol" title="La IA estaba ocupada: esta respuesta cita frases reales.">
-            Cita real del archivo
-          </span>
-        )}
-        {fuentes.length > 0 && (
-          <button onClick={onToggle} aria-expanded={open} className="flex items-center gap-1 hover:text-blanco">
-            <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} aria-hidden />
-            En qué se basó
+    <div className="flex max-w-[92%] items-start gap-2 self-start">
+      <SolDeMayo className="mt-1 h-7 w-7 shrink-0" />
+      <div className="flex min-w-0 flex-col">
+        <div className="whitespace-pre-wrap rounded-2xl rounded-tl-sm bg-celeste-claro px-4 py-3 text-base leading-relaxed text-tinta">
+          {m.content}
+        </div>
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 px-1 text-sm text-gris">
+          {m.modo === "archivo" && (
+            <span className="font-medium text-sol-borde" title="La IA estaba ocupada: esta respuesta cita frases reales.">
+              Cita real del archivo
+            </span>
+          )}
+          {fuentes.length > 0 && (
+            <button onClick={onToggle} aria-expanded={open} className="flex items-center gap-1 hover:text-tinta">
+              <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} aria-hidden />
+              En qué se basó
+            </button>
+          )}
+          <button onClick={onShare} className="flex items-center gap-1 hover:text-tinta">
+            <Share2 className="h-4 w-4" aria-hidden /> Compartir
           </button>
+        </div>
+        {open && fuentes.length > 0 && (
+          <ul className="mt-2 space-y-2 border-l-4 border-sol pl-3 text-sm text-gris">
+            {fuentes.map((f, i) => (
+              <li key={i} className="italic first-letter:uppercase">
+                “{f.length > 260 ? f.slice(0, 260) + "…" : f}”
+              </li>
+            ))}
+          </ul>
         )}
-        <button onClick={onShare} className="flex items-center gap-1 hover:text-blanco">
-          <Share2 className="h-4 w-4" aria-hidden /> Compartir
-        </button>
       </div>
-      {open && fuentes.length > 0 && (
-        <ul className="mt-2 space-y-2 border-l-2 border-celeste pl-3 text-sm text-niebla">
-          {fuentes.map((f, i) => (
-            <li key={i} className="italic first-letter:uppercase">
-              “{f.length > 260 ? f.slice(0, 260) + "…" : f}”
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 }
