@@ -1,60 +1,47 @@
-import type { Metadata } from "next";
-import { Playfair_Display, Lora, Crimson_Text } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Barlow, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const barlow = Barlow({
+  variable: "--font-barlow",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
 });
 
-const lora = Lora({
-  variable: "--font-lora",
+const barlowCondensed = Barlow_Condensed({
+  variable: "--font-barlow-condensed",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["600", "700", "800"],
 });
 
-const crimson = Crimson_Text({
-  variable: "--font-crimson",
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  style: ["normal", "italic"],
-});
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://modo-guillermo.vercel.app";
 
 export const metadata: Metadata = {
-  title: "El Modo Guillermo — Chatbot Doctrinario Peronista",
+  metadataBase: new URL(SITE_URL),
+  title: "El Modo Moreno",
   description:
-    "Chatbot con la personalidad de Guillermo Moreno. Hablá con él al modo doctrinario puro. Reindustrializá la conversación.",
-  keywords: [
-    "Guillermo Moreno",
-    "peronismo",
-    "doctrina peronista",
-    "chatbot",
-    "Argentina",
-    "producción y trabajo",
-  ],
-  authors: [{ name: "El Modo Guillermo" }],
+    "Preguntale lo que quieras a Guillermo Moreno. Asistente de IA entrenado con sus frases públicas. Principios y Valores.",
   openGraph: {
-    title: "El Modo Guillermo",
-    description: "Chatbot doctrinario con la personalidad de Guillermo Moreno.",
+    title: "El Modo Moreno",
+    description: "Preguntale lo que quieras. La economía es producción y trabajo, no especulación y renta.",
     type: "website",
+    locale: "es_AR",
   },
+  twitter: { card: "summary_large_image", title: "El Modo Moreno" },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = {
+  themeColor: "#0A2350",
+  width: "device-width",
+  initialScale: 1,
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" suppressHydrationWarning>
-      <body
-        className={`${playfair.variable} ${lora.variable} ${crimson.variable} antialiased`}
-        style={{ fontFamily: "var(--font-lora), serif" }}
-      >
+    <html lang="es-AR">
+      <body className={`${barlow.variable} ${barlowCondensed.variable} antialiased`}>
         {children}
         <Toaster />
       </body>

@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "corpus": "python scripts/process_corpus.py"
+    "corpus": "python scripts/process_corpus.py",
+    "telegram:setup": "node --env-file=.env scripts/telegram-setup.mjs"
   },
   "dependencies": {
     "@radix-ui/react-toast": "^1.2.14",
@@ -20,7 +21,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss-animate": "^1.0.7",
     "zod": "^4.0.2"
   },
   "devDependencies": {

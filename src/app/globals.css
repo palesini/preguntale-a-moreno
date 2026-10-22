@@ -1,257 +1,109 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* El Modo Moreno — identidad Principios y Valores.
+   Azul profundo de base, celeste del logo, blanco, y el dorado del Sol de Mayo solo para citas reales. */
+:root {
+  --azul: #0a2350;
+  --azul-2: #13306a;
+  --azul-3: #1c3f85;
+  --celeste: #00aeef;
+  --blanco: #ffffff;
+  --niebla: #b4c6e4;
+  --sol: #f6b40e;
+  --alerta: #ff9b8f;
+
+  /* tokens que usa el toast de shadcn */
+  --background: var(--azul-2);
+  --foreground: var(--blanco);
+  --border: var(--azul-3);
+  --destructive: #b3261e;
+  --destructive-foreground: var(--blanco);
+  --ring: var(--celeste);
+}
 
 @theme inline {
+  --color-azul: var(--azul);
+  --color-azul-2: var(--azul-2);
+  --color-azul-3: var(--azul-3);
+  --color-celeste: var(--celeste);
+  --color-blanco: var(--blanco);
+  --color-niebla: var(--niebla);
+  --color-sol: var(--sol);
+  --color-alerta: var(--alerta);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-lora);
-  --font-mono: var(--font-crimson);
-  --font-display: var(--font-playfair);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-barlow), system-ui, sans-serif;
+  --font-display: var(--font-barlow-condensed), var(--font-barlow), sans-serif;
 }
 
-:root {
-  --radius: 0.3rem;
-  /* Editorial setentista — papel envejecido + celeste/blanco/rosso */
-  --background: oklch(0.96 0.018 75);            /* crema / papel envejecido */
-  --foreground: oklch(0.22 0.02 35);             /* tinta marrón oscuro */
-  --card: oklch(0.98 0.014 80);                  /* papel más claro */
-  --card-foreground: oklch(0.22 0.02 35);
-  --popover: oklch(0.98 0.014 80);
-  --popover-foreground: oklch(0.22 0.02 35);
-  --primary: oklch(0.42 0.16 235);                /* celeste peronista profundo */
-  --primary-foreground: oklch(0.96 0.018 75);
-  --secondary: oklch(0.92 0.02 70);
-  --secondary-foreground: oklch(0.22 0.02 35);
-  --muted: oklch(0.92 0.02 70);
-  --muted-foreground: oklch(0.40 0.02 35);
-  --accent: oklch(0.55 0.20 25);                  /* rojo peronista */
-  --accent-foreground: oklch(0.98 0.014 80);
-  --destructive: oklch(0.55 0.20 25);
-  --border: oklch(0.78 0.025 60);                 /* bordes color kraft */
-  --input: oklch(0.92 0.02 70);
-  --ring: oklch(0.42 0.16 235);
-  --chart-1: oklch(0.42 0.16 235);
-  --chart-2: oklch(0.55 0.20 25);
-  --chart-3: oklch(0.78 0.025 60);
-  --chart-4: oklch(0.65 0.10 80);
-  --chart-5: oklch(0.40 0.02 35);
-  --sidebar: oklch(0.94 0.016 75);
-  --sidebar-foreground: oklch(0.22 0.02 35);
-  --sidebar-primary: oklch(0.42 0.16 235);
-  --sidebar-primary-foreground: oklch(0.96 0.018 75);
-  --sidebar-accent: oklch(0.92 0.02 70);
-  --sidebar-accent-foreground: oklch(0.22 0.02 35);
-  --sidebar-border: oklch(0.78 0.025 60);
-  --sidebar-ring: oklch(0.42 0.16 235);
+html,
+body {
+  background: var(--azul);
+  color: var(--blanco);
+  font-family: var(--font-barlow), system-ui, sans-serif;
 }
 
-.dark {
-  --background: oklch(0.18 0.02 35);
-  --foreground: oklch(0.92 0.02 75);
-  --card: oklch(0.22 0.02 35);
-  --card-foreground: oklch(0.92 0.02 75);
-  --popover: oklch(0.22 0.02 35);
-  --popover-foreground: oklch(0.92 0.02 75);
-  --primary: oklch(0.62 0.16 235);
-  --primary-foreground: oklch(0.18 0.02 35);
-  --secondary: oklch(0.28 0.02 35);
-  --secondary-foreground: oklch(0.92 0.02 75);
-  --muted: oklch(0.28 0.02 35);
-  --muted-foreground: oklch(0.70 0.02 75);
-  --accent: oklch(0.60 0.20 25);
-  --accent-foreground: oklch(0.92 0.02 75);
-  --destructive: oklch(0.60 0.20 25);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.62 0.16 235);
-  --chart-1: oklch(0.62 0.16 235);
-  --chart-2: oklch(0.60 0.20 25);
-  --chart-3: oklch(0.78 0.025 60);
-  --chart-4: oklch(0.65 0.10 80);
-  --chart-5: oklch(0.55 0.02 75);
-  --sidebar: oklch(0.22 0.02 35);
-  --sidebar-foreground: oklch(0.92 0.02 75);
-  --sidebar-primary: oklch(0.62 0.16 235);
-  --sidebar-primary-foreground: oklch(0.18 0.02 35);
-  --sidebar-accent: oklch(0.28 0.02 35);
-  --sidebar-accent-foreground: oklch(0.92 0.02 75);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.62 0.16 235);
+:focus-visible {
+  outline: 2px solid var(--celeste);
+  outline-offset: 2px;
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+/* Doble anillo del logo (SVG en modo-moreno.tsx). El título lo corta con una banda azul, como en el logo. */
+.anillos {
+  animation: anillos-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes anillos-in {
+  from {
+    opacity: 0;
+    transform: scale(0.86) rotate(-8deg);
   }
-  body {
-    @apply bg-background text-foreground;
-    /* Textura sutil de papel envejecido */
-    background-image:
-      radial-gradient(circle at 20% 30%, rgba(139, 90, 43, 0.04) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(74, 50, 25, 0.03) 0%, transparent 50%),
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 24px,
-        rgba(74, 50, 25, 0.015) 24px,
-        rgba(74, 50, 25, 0.015) 25px
-      );
-    background-attachment: fixed;
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
-/* === Tipografía editorial setentista === */
-.font-display { font-family: var(--font-playfair), serif; }
-.font-body    { font-family: var(--font-lora), serif; }
-.font-crimson { font-family: var(--font-crimson), serif; }
-
-/* === Textura de papel para componentes === */
-.paper-texture {
-  background-color: oklch(0.97 0.016 75);
-  background-image:
-    radial-gradient(circle at 30% 20%, rgba(139, 90, 43, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 70% 80%, rgba(74, 50, 25, 0.04) 0%, transparent 50%);
+.banda {
+  background: var(--azul);
+  box-shadow: 0 0 0 0.35rem var(--azul);
 }
 
-/* === Marco tipo diario de los 70 === */
-.newspaper-frame {
-  border: 3px double var(--primary);
-  position: relative;
-}
-.newspaper-frame::before {
-  content: "";
-  position: absolute;
-  inset: 4px;
-  border: 1px solid var(--primary);
-  pointer-events: none;
+.scroll-fino {
+  scrollbar-width: thin;
+  scrollbar-color: var(--azul-3) transparent;
 }
 
-/* === Columnas tipo diario === */
-.newspaper-columns {
-  column-count: 2;
-  column-gap: 2rem;
-  column-rule: 1px solid var(--border);
-}
-@media (max-width: 640px) {
-  .newspaper-columns { column-count: 1; }
-}
-
-/* === Burbujas de chat estilo setentista === */
-.bubble-moreno {
-  background-color: var(--card);
-  border: 1px solid var(--primary);
-  border-left: 4px solid var(--primary);
-  box-shadow:
-    2px 2px 0 rgba(74, 50, 25, 0.1),
-    inset 0 0 0 1px rgba(139, 90, 43, 0.05);
-}
-.bubble-user {
-  background-color: oklch(0.92 0.02 70);
-  border: 1px solid var(--accent);
-  border-right: 4px solid var(--accent);
-}
-
-/* === Tiras de color celeste-blanco-rosso === */
-.flag-strip {
-  background: linear-gradient(
-    90deg,
-    var(--primary) 0%,
-    var(--primary) 33.33%,
-    oklch(0.97 0.016 75) 33.33%,
-    oklch(0.97 0.016 75) 66.66%,
-    var(--accent) 66.66%,
-    var(--accent) 100%
-  );
-}
-
-/* === Drop cap (letra capital) === */
-.drop-cap::first-letter {
-  float: left;
-  font-family: var(--font-playfair), serif;
-  font-size: 3.2rem;
-  line-height: 0.85;
-  font-weight: 800;
-  padding-right: 0.5rem;
-  padding-top: 0.25rem;
-  color: var(--primary);
-}
-
-/* === Scrollbar estilo vintage === */
-.vintage-scroll::-webkit-scrollbar {
-  width: 10px;
-}
-.vintage-scroll::-webkit-scrollbar-track {
-  background: oklch(0.92 0.02 70);
-}
-.vintage-scroll::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border: 2px solid oklch(0.92 0.02 70);
-}
-.vintage-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
-
-/* === Animación de "escribiendo" === */
-@keyframes typewriter {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
-}
 .typing-dot {
-  animation: typewriter 1.4s infinite ease-in-out;
+  animation: typing 1.2s infinite ease-in-out;
 }
-.typing-dot:nth-child(2) { animation-delay: 0.2s; }
-.typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-/* === Sello tipo carátula oficial === */
-.official-seal {
-  display: inline-block;
-  border: 2px solid var(--primary);
-  border-radius: 50%;
-  padding: 0.5rem 0.75rem;
-  font-variant: small-caps;
-  font-family: var(--font-playfair), serif;
-  transform: rotate(-5deg);
-  opacity: 0.85;
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
 }
 
-/* === Borde tipo grabado === */
-.engraving-border {
-  border: 1px solid var(--primary);
-  outline: 1px solid var(--primary);
-  outline-offset: 4px;
+@media (prefers-reduced-motion: reduce) {
+  .anillos,
+  .typing-dot {
+    animation: none;
+  }
 }

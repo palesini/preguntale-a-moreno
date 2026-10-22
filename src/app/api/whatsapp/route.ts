@@ -14,30 +14,17 @@
 import { generateReply, type ChatTurn } from "@/lib/moreno/reply";
 import { createRateLimiter } from "@/lib/http/rate-limit";
 import { isValidTwilioSignature, twiml } from "@/lib/http/twilio";
+import { createConversationStore } from "@/lib/moreno/conversations";
 
-const MAX_TURNS_PER_USER = 20;
-const MAX_USERS_IN_MEMORY = 500;
 const MAX_BODY_CHARS = 1000;
 const WHATSAPP_MAX_CHARS = 1500;
 
-// Historial en memoria por número (se pierde al reiniciar; fase 3: pasarlo a una base).
-const conversations = new Map<string, ChatTurn[]>();
+const conversations = createConversationStore({ maxTurns: 20 });
 const limiter = createRateLimiter({ limit: 10, windowMs: 60_000 });
-
-function remember(user: string, turn: ChatTurn): ChatTurn[] {
-  const conv = conversations.get(user) ?? [];
-  conversations.delete(user); // re-insertar para mantener orden LRU
-  conv.push(turn);
-  const trimmed = conv.slice(-MAX_TURNS_PER_USER);
-  conversations.set(user, trimmed);
-  if (conversations.size > MAX_USERS_IN_MEMORY) {
-    conversations.delete(conversations.keys().next().value!);
-  }
-  return [...trimmed]; // copia: el llamador no debe ver mutaciones posteriores
-}
+const remember = (user: string, turn: ChatTurn) => conversations.add(user, turn);
 
 export function _resetConversations() {
-  conversations.clear();
+  conversations.clearAll();
 }
 
 function xml(body: string, status = 200) {
