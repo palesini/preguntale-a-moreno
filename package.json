@@ -1,6 +1,8 @@
 {
-  "name": "modo-guillermo",
+  "name": "preguntale-a-moreno",
   "version": "0.3.0",
+  "description": "Preguntale a Moreno: asistente de IA con la personalidad de Guillermo Moreno, en la web y en Telegram.",
+  "author": "Pablo Alesini",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",

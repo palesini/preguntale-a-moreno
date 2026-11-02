@@ -1,7 +1,9 @@
 # Preguntale a Moreno
 
 Asistente de IA con la personalidad de Guillermo Moreno, entrenado con un corpus de 2.564 frases públicas reales.
-Funciona en la web y en Telegram.
+Funciona en la web ([preguntaleamoreno.vercel.app](https://preguntaleamoreno.vercel.app)) y en Telegram ([@ElModoMorenoBot](https://t.me/ElModoMorenoBot)).
+
+Creado por **Pablo Alesini**.
 
 ## Cómo funciona
 1. El usuario pregunta.
