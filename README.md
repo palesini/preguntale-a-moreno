@@ -67,3 +67,17 @@ src/
     ├── moreno/               corpus.ts (BM25) · llm.ts · reply.ts (motor) · archivo.ts · telegram.ts · conversations.ts · system-prompt.ts
     └── http/                 rate-limit.ts · twilio.ts
 ```
+
+## Contribuir
+¿Querés sumar? Mirá [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Licencia
+Copyright (C) 2026 Pablo Alesini
+
+El código se distribuye bajo la [GNU Affero General Public License v3.0 o posterior](LICENSE) (AGPL-3.0-or-later):
+podés usarlo, estudiarlo, modificarlo y redistribuirlo, pero si publicás una versión modificada,
+incluso como servicio web, tenés que liberar su código bajo la misma licencia.
+
+Quedan fuera de la licencia del código:
+- Las frases del corpus (`upload/` y `src/data/`): son declaraciones públicas de Guillermo Moreno, recopiladas con fines de estudio y difusión.
+- La caricatura de Moreno (`public/moreno-cara.png`): pertenece a su autor.
